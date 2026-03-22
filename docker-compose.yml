@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  job-portal-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: job-portal-backend
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      # Bạn có thể ghi đè các biến môi trường tại đây thay vì trong file properties
+      # ví dụ như Đổi IP PostgreSQL, JWT_SECRET, Email..
+      # - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
