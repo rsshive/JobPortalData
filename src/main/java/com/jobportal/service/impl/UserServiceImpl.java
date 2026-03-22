@@ -1,9 +1,7 @@
 package com.jobportal.service.impl;
 
-import com.jobportal.model.PasswordResetToken;
 import com.jobportal.model.User;
 import com.jobportal.model.enums.AccountStatus;
-import com.jobportal.repository.PasswordResetTokenRepository;
 import com.jobportal.repository.UserRepository;
 import com.jobportal.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +17,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -72,35 +68,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
-    @Transactional
-    public void createPasswordResetTokenForUser(User user, String token) {
-        passwordResetTokenRepository.deleteByUser(user); // Clear old tokens
-        PasswordResetToken myToken = PasswordResetToken.builder()
-                .token(token)
-                .user(user)
-                .expiryDate(LocalDateTime.now().plusHours(24))
-                .build();
-        passwordResetTokenRepository.save(myToken);
-    }
 
-    @Override
-    public String validatePasswordResetToken(String token) {
-        return passwordResetTokenRepository.findByToken(token)
-                .map(passToken -> {
-                    if (passToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-                        return "expired";
-                    }
-                    return null;
-                })
-                .orElse("invalid");
-    }
 
     @Override
     @Transactional
     public void changeUserPassword(User user, String newPassword) {
         user.setPasswordHash(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        passwordResetTokenRepository.deleteByUser(user); // Cleanup
     }
 }

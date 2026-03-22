@@ -50,4 +50,25 @@ public class ApplicantServiceImpl implements ApplicantService {
     public List<Applicant> findAll() {
         return applicantRepository.findAll();
     }
+
+    @Override
+    public Optional<Applicant> findByEmail(String email) {
+        return applicantRepository.findByEmail(email);
+    }
+
+    @Override
+    public Applicant updateProfile(String email, Applicant updatedProfile) {
+        Applicant applicant = applicantRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+
+        // Update fields if provided
+        if (updatedProfile.getFullName() != null) applicant.setFullName(updatedProfile.getFullName());
+        if (updatedProfile.getPhone() != null) applicant.setPhone(updatedProfile.getPhone());
+        if (updatedProfile.getSkills() != null) applicant.setSkills(updatedProfile.getSkills());
+        if (updatedProfile.getEducation() != null) applicant.setEducation(updatedProfile.getEducation());
+        if (updatedProfile.getWorkExperience() != null) applicant.setWorkExperience(updatedProfile.getWorkExperience());
+        if (updatedProfile.getJobPreferences() != null) applicant.setJobPreferences(updatedProfile.getJobPreferences());
+
+        return applicantRepository.save(applicant);
+    }
 }

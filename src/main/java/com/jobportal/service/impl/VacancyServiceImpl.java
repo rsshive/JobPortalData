@@ -6,6 +6,7 @@ import com.jobportal.model.enums.VacancyStatus;
 import com.jobportal.repository.RecruiterRepository;
 import com.jobportal.repository.VacancyRepository;
 import com.jobportal.service.VacancyService;
+import com.jobportal.service.JobAlertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class VacancyServiceImpl implements VacancyService {
 
     private final VacancyRepository vacancyRepository;
     private final RecruiterRepository recruiterRepository;
+    private final JobAlertService jobAlertService;
 
     @Override
     @Transactional
@@ -88,7 +90,12 @@ public class VacancyServiceImpl implements VacancyService {
         Vacancy vacancy = vacancyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vacancy not found"));
         vacancy.setStatus(VacancyStatus.OPEN);
-        return vacancyRepository.save(vacancy);
+        Vacancy savedVacancy = vacancyRepository.save(vacancy);
+        
+        // Trigger Job Alerts
+        jobAlertService.matchAndNotify(savedVacancy);
+        
+        return savedVacancy;
     }
 
     @Override

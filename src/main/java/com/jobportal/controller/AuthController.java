@@ -7,7 +7,6 @@ import com.jobportal.dto.UserResponse;
 import com.jobportal.model.*;
 import com.jobportal.model.enums.AccountStatus;
 import com.jobportal.model.enums.Role;
-import com.jobportal.repository.PasswordResetTokenRepository;
 import com.jobportal.security.CustomUserDetails;
 import com.jobportal.security.JwtUtil;
 import com.jobportal.service.EmailService;
@@ -21,7 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,42 +34,40 @@ public class AuthController {
     private final org.springframework.security.core.userdetails.UserDetailsService userDetailsService;
     private final OtpService otpService;
     private final EmailService emailService;
-    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
     @PostMapping("/forgot-password")
-    @Operation(summary = "Forgot password request", description = "Generates a reset token and sends an email to the user.")
+    @Operation(summary = "Forgot password request", description = "Generates a reset OTP and sends an email to the user.")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        User user = userService.findByEmail(email)
+        userService.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
-        String token = UUID.randomUUID().toString();
-        userService.createPasswordResetTokenForUser(user, token);
+        String otpCode = otpService.generateOtp(email);
 
-        String resetLink = "http://localhost:8080/reset-password?token=" + token; // Placeholder link
-        String subject = "Password Reset Request";
-        String body = "To reset your password, click the link below:\n" + resetLink +
-                      "\n\nThis link will expire in 24 hours.";
+        String subject = "Password Reset Code";
+        String body = "Hello,\n\n" +
+                      "Your OTP to reset your password is: " + otpCode +
+                      "\n\nThis code will expire in 5 minutes.";
         
         try {
             emailService.sendEmail(email, subject, body);
-            return ResponseEntity.ok("Reset link has been sent to your email.");
+            return ResponseEntity.ok("OTP has been sent to your email.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Failed to send email: " + e.getMessage());
         }
     }
 
     @PostMapping("/reset-password")
-    @Operation(summary = "Reset password", description = "Validates the reset token and updates the user's password.")
-    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
-        String result = userService.validatePasswordResetToken(token);
-        if (result != null) {
-            return ResponseEntity.badRequest().body("Token is " + result);
+    @Operation(summary = "Reset password", description = "Validates the OTP and updates the user's password.")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String otpCode, @RequestParam String newPassword) {
+        boolean isVerified = otpService.verifyOtp(email, otpCode);
+        if (!isVerified) {
+            return ResponseEntity.badRequest().body("Invalid or expired OTP.");
         }
 
-        PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Token not found"));
+        User user = userService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         
-        userService.changeUserPassword(resetToken.getUser(), newPassword);
+        userService.changeUserPassword(user, newPassword);
         return ResponseEntity.ok("Password has been reset successfully.");
     }
 

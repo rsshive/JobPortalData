@@ -1,15 +1,19 @@
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\JobAlertService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\UserRepository.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\CVService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\CVController.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\ApplicantServiceImpl.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\JobAlertRepository.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\VacancyServiceImpl.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\dto\LoginRequest.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\JobAlertController.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\ApplicantService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\EmailService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\dto\RegisterRequest.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\SavedJobServiceImpl.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\VacancyService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\AuthController.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\JobAlert.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\ApplicationRepository.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\Application.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\ApplicationServiceImpl.java
@@ -24,6 +28,7 @@ Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\Recruiter
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\CV.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\dto\AuthResponse.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\PasswordResetTokenRepository.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\config\DataSeeder.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\enums\Role.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\JobPortalApplication.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\SavedJobService.java
@@ -55,7 +60,9 @@ Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\Admi
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\Admin.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\ApplicantRepository.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\VacancyReportServiceImpl.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\ApplicantController.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\Vacancy.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\JobAlertServiceImpl.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\ApplicationController.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\config\OpenApiConfig.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\VacancyRepository.java
