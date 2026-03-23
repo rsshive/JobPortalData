@@ -6,6 +6,7 @@ com\jobportal\controller\JobAlertController.class
 com\jobportal\model\CV$CVBuilder.class
 com\jobportal\security\CustomUserDetailsService.class
 com\jobportal\service\impl\ApplicationServiceImpl.class
+com\jobportal\service\FileStorageService.class
 com\jobportal\service\impl\VacancyServiceImpl.class
 com\jobportal\model\User$UserBuilderImpl.class
 com\jobportal\model\Admin.class
@@ -19,6 +20,7 @@ com\jobportal\repository\CVRepository.class
 com\jobportal\service\ApplicationService.class
 com\jobportal\model\VacancyReport$VacancyReportBuilder.class
 com\jobportal\security\CustomUserDetails.class
+com\jobportal\service\impl\FileStorageServiceImpl.class
 com\jobportal\service\impl\UserServiceImpl.class
 com\jobportal\controller\SavedJobController.class
 com\jobportal\JobPortalApplication.class

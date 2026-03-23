@@ -11,6 +11,7 @@ Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\Applica
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\EmailService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\dto\RegisterRequest.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\SavedJobServiceImpl.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\impl\FileStorageServiceImpl.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\VacancyService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\controller\AuthController.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\JobAlert.java
@@ -26,6 +27,7 @@ Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\SavedJob.
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\User.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\Recruiter.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\model\CV.java
+Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\service\FileStorageService.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\dto\AuthResponse.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\repository\PasswordResetTokenRepository.java
 Z:\SP26\SWD\JobPortals\JobPortalData\src\main\java\com\jobportal\config\DataSeeder.java

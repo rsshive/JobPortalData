@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,19 +23,42 @@ import java.util.Optional;
 public class CVController {
 
     private final CVService cvService;
+    private final com.jobportal.service.FileStorageService fileStorageService;
 
-    @PostMapping
-    @Operation(summary = "Upload a new CV", description = "Allows an applicant to upload a CV.")
-    public ResponseEntity<CV> uploadCV(@RequestBody CV cv) {
+    @PostMapping("/upload")
+    @Operation(summary = "Upload a CV file", description = "Allows an applicant to upload a PDF/DOCX CV file.")
+    public ResponseEntity<CV> uploadCVFile(@RequestParam("file") MultipartFile file) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         if (userDetails.getUser() instanceof Applicant) {
-            cv.setApplicant((Applicant) userDetails.getUser());
-            return ResponseEntity.ok(cvService.uploadCV(cv));
+            return ResponseEntity.ok(cvService.uploadCV(file, (Applicant) userDetails.getUser()));
         } else {
-            return ResponseEntity.status(403).build(); // Only applicants can upload CVs
+            return ResponseEntity.status(403).build();
         }
+    }
+
+    @GetMapping("/download/{id}")
+    @Operation(summary = "Download a CV file", description = "Allows downloading the physical CV file by CV ID.")
+    public ResponseEntity<org.springframework.core.io.Resource> downloadCV(@PathVariable Integer id) {
+        Optional<CV> cvOpt = cvService.findById(id);
+        if (cvOpt.isPresent()) {
+            CV cv = cvOpt.get();
+            org.springframework.core.io.Resource resource = fileStorageService.loadFileAsResource(cv.getFilePath());
+            
+            String contentType = "application/octet-stream";
+            try {
+                contentType = org.springframework.http.MediaType.APPLICATION_PDF_VALUE; // Simplification for PDF
+            } catch (Exception e) {
+                // Keep default
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
+                    .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping
