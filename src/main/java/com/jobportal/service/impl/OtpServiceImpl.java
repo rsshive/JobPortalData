@@ -52,12 +52,13 @@ public class OtpServiceImpl implements OtpService {
     }
 
     @Override
+    @Transactional
     public void sendOtpEmail(String email) {
         String otpCode = generateOtp(email);
         String subject = "Your Job Portal Verification Code";
-        String body = "Hello,\n\nYour verification code is: " + otpCode + 
-                      "\nThis code will expire in 5 minutes.\n\nBest regards,\nJob Portal Team";
-        
+        String body = "Hello,\n\nYour verification code is: " + otpCode +
+                "\nThis code will expire in 5 minutes.\n\nBest regards,\nJob Portal Team";
+
         emailService.sendEmail(email, subject, body);
     }
 }
