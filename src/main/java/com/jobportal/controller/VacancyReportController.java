@@ -26,7 +26,7 @@ public class VacancyReportController {
     @PostMapping("/vacancy/{vacancyId}")
     @Operation(summary = "Report a vacancy", description = "Allows a user to report a problematic job vacancy.")
     public ResponseEntity<VacancyReport> reportVacancy(
-            @PathVariable Integer vacancyId,
+            @PathVariable("vacancyId") Integer vacancyId,
             @RequestBody VacancyReport report) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,7 +51,7 @@ public class VacancyReportController {
 
     @GetMapping("/status/{status}")
     @Operation(summary = "Get reports by status", description = "Filters reports by their status, e.g., PENDING or RESOLVED (Admin only).")
-    public ResponseEntity<List<VacancyReport>> getReportsByStatus(@PathVariable String status) {
+    public ResponseEntity<List<VacancyReport>> getReportsByStatus(@PathVariable("status") String status) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -64,7 +64,7 @@ public class VacancyReportController {
 
     @PatchMapping("/{id}/resolve")
     @Operation(summary = "Resolve a report", description = "Marks a vacancy report as resolved by an Admin.")
-    public ResponseEntity<VacancyReport> resolveReport(@PathVariable Integer id) {
+    public ResponseEntity<VacancyReport> resolveReport(@PathVariable("id") Integer id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 

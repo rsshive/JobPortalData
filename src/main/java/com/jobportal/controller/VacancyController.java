@@ -41,7 +41,7 @@ public class VacancyController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get vacancy details", description = "Retrieves a specific job vacancy by its ID.")
-    public ResponseEntity<Vacancy> getVacancy(@PathVariable Integer id) {
+    public ResponseEntity<Vacancy> getVacancy(@PathVariable("id") Integer id) {
         return vacancyService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -55,24 +55,24 @@ public class VacancyController {
 
     @GetMapping("/status/{status}")
     @Operation(summary = "Get vacancies by status", description = "Retrieves job vacancies filtered by status (e.g., OPEN, CLOSED).")
-    public List<Vacancy> getVacanciesByStatus(@PathVariable VacancyStatus status) {
+    public List<Vacancy> getVacanciesByStatus(@PathVariable("status") VacancyStatus status) {
         return vacancyService.findByStatus(status);
     }
 
     @GetMapping("/search")
     @Operation(summary = "Search job vacancies", description = "Searches for job vacancies based on various filters.")
     public List<Vacancy> searchVacancies(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String location,
-            @RequestParam(required = false) Integer minSalary,
-            @RequestParam(required = false) Integer maxSalary,
-            @RequestParam(required = false) String type) {
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "location", required = false) String location,
+            @RequestParam(name = "minSalary", required = false) Integer minSalary,
+            @RequestParam(name = "maxSalary", required = false) Integer maxSalary,
+            @RequestParam(name = "type", required = false) String type) {
         return vacancyService.searchVacancies(title, location, minSalary, maxSalary, type);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update a vacancy", description = "Updates an existing job vacancy.")
-    public ResponseEntity<Void> updateVacancy(@PathVariable Integer id, @RequestBody Vacancy vacancy) {
+    public ResponseEntity<Void> updateVacancy(@PathVariable("id") Integer id, @RequestBody Vacancy vacancy) {
         vacancy.setVacancyId(id);
         vacancyService.updateVacancy(vacancy);
         return ResponseEntity.ok().build();
@@ -80,7 +80,7 @@ public class VacancyController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a vacancy", description = "Deletes a job vacancy by its ID.")
-    public ResponseEntity<Void> deleteVacancy(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteVacancy(@PathVariable("id") Integer id) {
         vacancyService.deleteVacancy(id);
         return ResponseEntity.ok().build();
     }

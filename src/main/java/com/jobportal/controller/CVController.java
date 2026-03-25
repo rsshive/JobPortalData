@@ -40,7 +40,7 @@ public class CVController {
 
     @GetMapping("/download/{id}")
     @Operation(summary = "Download a CV file", description = "Allows downloading the physical CV file by CV ID.")
-    public ResponseEntity<org.springframework.core.io.Resource> downloadCV(@PathVariable Integer id) {
+    public ResponseEntity<org.springframework.core.io.Resource> downloadCV(@PathVariable("id") Integer id) {
         Optional<CV> cvOpt = cvService.findById(id);
         if (cvOpt.isPresent()) {
             CV cv = cvOpt.get();
@@ -77,7 +77,7 @@ public class CVController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get CV by ID", description = "Retrieves a specific CV by its ID.")
-    public ResponseEntity<CV> getCV(@PathVariable Integer id) {
+    public ResponseEntity<CV> getCV(@PathVariable("id") Integer id) {
         Optional<CV> cvOpt = cvService.findById(id);
         if (cvOpt.isPresent()) {
             CV cv = cvOpt.get();
@@ -95,7 +95,7 @@ public class CVController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a CV", description = "Deletes a specific CV by its ID (owner only).")
-    public ResponseEntity<Void> deleteCV(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCV(@PathVariable("id") Integer id) {
         Optional<CV> cvOpt = cvService.findById(id);
         if (cvOpt.isPresent()) {
             CV cv = cvOpt.get();

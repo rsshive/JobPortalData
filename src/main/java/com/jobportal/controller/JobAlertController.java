@@ -35,7 +35,7 @@ public class JobAlertController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an alert", description = "Deletes a specific job alert by ID.")
-    public ResponseEntity<Void> deleteAlert(Authentication authentication, @PathVariable Integer id) {
+    public ResponseEntity<Void> deleteAlert(Authentication authentication, @PathVariable("id") Integer id) {
         String email = authentication.getName();
         try {
             jobAlertService.deleteAlert(id, email);

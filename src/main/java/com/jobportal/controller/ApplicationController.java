@@ -27,7 +27,7 @@ public class ApplicationController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get application details", description = "Retrieves a specific job application by its ID.")
-    public ResponseEntity<Application> getApplication(@PathVariable Integer id) {
+    public ResponseEntity<Application> getApplication(@PathVariable("id") Integer id) {
         return applicationService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -35,7 +35,7 @@ public class ApplicationController {
 
     @PatchMapping("/{id}/status")
     @Operation(summary = "Update application status", description = "Updates the status of an application (e.g., ACCEPTED, REJECTED).")
-    public ResponseEntity<Void> updateStatus(@PathVariable Integer id, @RequestParam String status) {
+    public ResponseEntity<Void> updateStatus(@PathVariable("id") Integer id, @RequestParam("status") String status) {
         applicationService.updateStatus(id, status);
         return ResponseEntity.ok().build();
     }

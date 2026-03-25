@@ -24,7 +24,7 @@ public class SavedJobController {
 
     @PostMapping("/{vacancyId}")
     @Operation(summary = "Save a job vacancy", description = "Allows an applicant to save a specific job vacancy.")
-    public ResponseEntity<SavedJob> saveJob(@PathVariable Integer vacancyId) {
+    public ResponseEntity<SavedJob> saveJob(@PathVariable("vacancyId") Integer vacancyId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -38,7 +38,7 @@ public class SavedJobController {
 
     @DeleteMapping("/{savedJobId}")
     @Operation(summary = "Unsave a job vacancy", description = "Allows an applicant to remove a job from their saved list.")
-    public ResponseEntity<Void> unsaveJob(@PathVariable Integer savedJobId) {
+    public ResponseEntity<Void> unsaveJob(@PathVariable("savedJobId") Integer savedJobId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 

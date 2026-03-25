@@ -23,9 +23,9 @@ public class RecruiterController {
     @GetMapping("/search-applicants")
     @Operation(summary = "Search for talent", description = "Allows recruiters to find applicants based on skills, education, and work experience.")
     public List<Applicant> searchApplicants(
-            @RequestParam(required = false) String skills,
-            @RequestParam(required = false) String education,
-            @RequestParam(required = false) String experience) {
+            @RequestParam(name = "skills", required = false) String skills,
+            @RequestParam(name = "education", required = false) String education,
+            @RequestParam(name = "experience", required = false) String experience) {
         return applicantService.searchApplicants(skills, education, experience);
     }
 }

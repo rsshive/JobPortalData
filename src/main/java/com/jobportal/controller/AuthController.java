@@ -37,7 +37,7 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     @Operation(summary = "Forgot password request", description = "Generates a reset OTP and sends an email to the user.")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+    public ResponseEntity<String> forgotPassword(@RequestParam("email") String email) {
         userService.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
@@ -58,7 +58,7 @@ public class AuthController {
 
     @PostMapping("/reset-password")
     @Operation(summary = "Reset password", description = "Validates the OTP and updates the user's password.")
-    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String otpCode, @RequestParam String newPassword) {
+    public ResponseEntity<String> resetPassword(@RequestParam("email") String email, @RequestParam("otpCode") String otpCode, @RequestParam("newPassword") String newPassword) {
         boolean isVerified = otpService.verifyOtp(email, otpCode);
         if (!isVerified) {
             return ResponseEntity.badRequest().body("Invalid or expired OTP.");
@@ -119,7 +119,7 @@ public class AuthController {
 
     @PostMapping("/verify-otp")
     @Operation(summary = "Verify OTP", description = "Verifies the OTP and activates the user account.")
-    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otpCode) {
+    public ResponseEntity<String> verifyOtp(@RequestParam("email") String email, @RequestParam("otpCode") String otpCode) {
         boolean isVerified = otpService.verifyOtp(email, otpCode);
         if (isVerified) {
             userService.updateUserStatusByEmail(email, AccountStatus.ACTIVE);
@@ -131,7 +131,7 @@ public class AuthController {
 
     @PostMapping("/resend-otp")
     @Operation(summary = "Resend OTP", description = "Sends a new verification code to the user's email.")
-    public ResponseEntity<String> resendOtp(@RequestParam String email) {
+    public ResponseEntity<String> resendOtp(@RequestParam("email") String email) {
         try {
             otpService.sendOtpEmail(email);
             return ResponseEntity.ok("A new verification code has been sent to your email.");

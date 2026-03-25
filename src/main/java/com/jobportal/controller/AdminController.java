@@ -31,7 +31,7 @@ public class AdminController {
 
     @PatchMapping("/users/{userId}/status")
     @Operation(summary = "Update user status", description = "Activates or deactivates a user account (Admin only).")
-    public ResponseEntity<User> updateUserStatus(@PathVariable Integer userId, @RequestParam AccountStatus status) {
+    public ResponseEntity<User> updateUserStatus(@PathVariable("userId") Integer userId, @RequestParam("status") AccountStatus status) {
         try {
             User updatedUser = userService.updateUserStatus(userId, status);
             return ResponseEntity.ok(updatedUser);
@@ -42,13 +42,13 @@ public class AdminController {
 
     @PatchMapping("/vacancies/{id}/approve")
     @Operation(summary = "Approve a vacancy", description = "Approves a pending job vacancy, making it visible to applicants.")
-    public ResponseEntity<Vacancy> approveVacancy(@PathVariable Integer id) {
+    public ResponseEntity<Vacancy> approveVacancy(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(vacancyService.approveVacancy(id));
     }
 
     @PatchMapping("/vacancies/{id}/reject")
     @Operation(summary = "Reject a vacancy", description = "Rejects a pending job vacancy.")
-    public ResponseEntity<Vacancy> rejectVacancy(@PathVariable Integer id) {
+    public ResponseEntity<Vacancy> rejectVacancy(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(vacancyService.rejectVacancy(id));
     }
 }

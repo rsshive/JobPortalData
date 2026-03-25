@@ -26,7 +26,7 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get company details", description = "Retrieves information about a specific company.")
-    public ResponseEntity<Company> getCompany(@PathVariable Integer id) {
+    public ResponseEntity<Company> getCompany(@PathVariable("id") Integer id) {
         return companyService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -40,14 +40,14 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update company profile", description = "Allows a recruiter to update their company information.")
-    public ResponseEntity<Company> updateCompany(@PathVariable Integer id, @RequestBody Company company) {
+    public ResponseEntity<Company> updateCompany(@PathVariable("id") Integer id, @RequestBody Company company) {
         company.setCompanyId(id);
         return ResponseEntity.ok(companyService.updateCompany(company));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a company", description = "Deletes a company record from the system.")
-    public ResponseEntity<Void> deleteCompany(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCompany(@PathVariable("id") Integer id) {
         companyService.deleteCompany(id);
         return ResponseEntity.noContent().build();
     }
